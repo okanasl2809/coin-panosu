@@ -1,0 +1,36 @@
+name: v7 bulut alarmı
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+concurrency:
+  group: v7-alarm
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Önceki durumu yükle
+        uses: actions/cache/restore@v4
+        with:
+          path: alarm/state
+          key: v7-state-${{ github.run_id }}
+          restore-keys: v7-state-
+      - name: Sinyalleri hesapla ve gönder
+        run: node alarm/run.mjs
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT: ${{ secrets.TELEGRAM_CHAT }}
+      - name: Durumu kaydet
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: alarm/state
+          key: v7-state-${{ github.run_id }}

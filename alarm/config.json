@@ -1,0 +1,12 @@
+{
+  "aciklama": "Bulut alarmı ayarları. 'otomatik_ilk' = 24 saatlik hacme göre en büyük kaç USDT coini izlensin. 'ekstra' listesine istediğin coinleri yaz (örn. \"PEPEUSDT\"). Zaman dilimleri: 60 = 1 saat, 240 = 4 saat, D = günlük.",
+  "otomatik_ilk": 80,
+  "ekstra": [],
+  "haric": [],
+  "zaman_dilimleri": ["240", "D"],
+  "pump_radari": true,
+  "sikisma_sinyalleri": false,
+  "cikis_ve_kilit_mesajlari": true,
+  "sabah_ozeti": true,
+  "sabah_ozeti_saati_tr": 9
+}
