@@ -66,7 +66,7 @@ async function main() {
       const r = V7.trend(bars, TF[tf].ms / 1000, btc, {});
       if (r.last && r.last.inT) open.push({ sym, tf, entry: r.last.entry, close: r.last.close, stop: r.last.curStop, lvl: r.last.ladLvl });
       if (!due.includes(tf)) continue;
-      const from = Math.max(state.last[tf] || 0, bars[bars.length - 1].ct - 3 * TF[tf].ms); // en fazla son 3 mum
+      const from = state.last[tf] ? Math.max(state.last[tf], bars[bars.length - 1].ct - 3 * TF[tf].ms) : bars[bars.length - 1].ct - 1; // ilk çalışmada sadece son mum, sonra en fazla son 3 mum
       for (const e of r.events) {
         if (e.t <= from) continue;
         const name = s => `${ICON[s] || ""} ${V7.NAMES[s]} [${TF[tf].lbl}]: ${sym} @ ${fmt(e.px)}`;
@@ -82,7 +82,7 @@ async function main() {
       const h = await kl(sym, "1h", 400), d = await kl(sym, "1d", 260);
       if (h.length < 200 || d.length < 40) return;
       const p = V7.pump(h, d, btc.d, {});
-      const fromH = Math.max(state.last.P || 0, h[h.length - 1].ct - 3 * 36e5), fromD = Math.max(state.last.PD || 0, d[d.length - 1].ct - 864e5);
+      const fromH = state.last.P ? Math.max(state.last.P, h[h.length - 1].ct - 3 * 36e5) : h[h.length - 1].ct - 1, fromD = state.last.PD ? Math.max(state.last.PD, d[d.length - 1].ct - 864e5) : d[d.length - 1].ct - 1;
       for (const e of p.events) {
         const k = `${sym}|P|${e.code}|${e.t}`;
         if (e.code === 11 && e.t > fromH) add(k, `🔥 4S ATEŞLEME: ${sym} @ ${fmt(e.px)} | 4s: ${pct(e.r4)} hacim ${e.v4x.toFixed(1)}x | 7g: ${pct(e.r7)} | Puan ${e.pts}/4 | Stop: ${fmt(e.stop)} sonra en yüksekten 15 ATR(1s) iz süren\n${tv(sym)}`);
