@@ -6,6 +6,13 @@ Binance verisiyle canlı çalışan kripto takip panosu ve "Kripto Alarm Sistemi
 
 Bilgisayarda, tablette ve telefonda aynı linkle açılır. Telefonda ve tablette tarayıcı menüsünden **"Ana ekrana ekle"** dersen uygulama gibi simgesi olur.
 
+## Panoda neler var
+- **Bugün dikkat et:** SAT/STOP gelen, stopa yaklaşan, kâr kilidi basamağı geçen sinyaller ve riskli pozisyonlar tek yerde.
+- **Sinyallerim:** TradingView v7 alarmlarını yapıştır ya da panonun otomatik taramasına bırak; her sinyal v7 kurallarıyla canlı izlenir.
+- **v7 Bulut Takibi:** Bilgisayar kapalıyken bulutta çalışan alarmın sonuçları (sistemin pozisyonda olduğu coinler, son sinyaller). Her cihazda aynı.
+- **Geriye dönük test**, Pump Radarı, hacim ve fiyat listeleri, pozisyon ve portföy riski, ana piyasalar, likidasyon haritası, alarm karnesi.
+- Üstteki düğmelerle bölümlere hızlı geç; **Bölümleri seç** ile kullanmadıklarını gizle. Telefonda sağ alttaki **Bölümler** düğmesi başa döndürür.
+
 ## Cihazlar arası taşıma
 Sinyallerin, pozisyonların ve ayarların her cihazın kendi tarayıcısında saklanır. Başka bir cihaza taşımak için:
 1. Panoda sağdaki **Alarmlar** sütununda **Yedek ve diğer cihazlar** bölümünü aç, **Yedeği indir**'e bas.

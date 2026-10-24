@@ -290,6 +290,8 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
 .rcrow input{flex:1;min-width:0}
 .rcout{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 12px;font-size:13px;border-top:1px solid var(--line);padding-top:10px}
 .rcout dt{color:var(--muted)} .rcout dd{margin:0;text-align:right;font-family:var(--mono)}
+.warnbox{background:var(--warn-bg);color:var(--fg);border-left:3px solid var(--warn);border-radius:6px;padding:7px 10px;font-size:12.5px;line-height:1.4}
+.warnbox a{color:var(--accent)}
 .rcout .warnbox{grid-column:1/-1;background:var(--warn-bg);color:var(--warn);border-radius:6px;padding:6px 8px;font-size:12.5px}
 .rcout .badbox{grid-column:1/-1;background:var(--down-bg);color:var(--down);border-radius:6px;padding:6px 8px;font-size:12.5px}
 
@@ -420,6 +422,55 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
 .pfitems span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 9px} .pfitems span.lk{color:var(--up);border-color:var(--up)}
 .bkrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 @media (max-width:640px){ .scr{grid-template-columns:70px minmax(0,1fr) 92px;} .scr .scn{grid-column:2/4} .scr>span:last-child{grid-column:3} .sgtools .meta{margin-left:0} }
+/* hızlı geçiş, bugün, bulut, telefon kartları */
+.panel,.alarms{scroll-margin-top:calc(var(--hdr) + 8px)}
+.qnav{display:flex;align-items:center;gap:6px;margin-top:8px;min-width:0}
+.qnav-l{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0;-webkit-overflow-scrolling:touch}
+.qnav-l::-webkit-scrollbar{display:none}
+.qnav button,.qnav summary{all:unset;cursor:pointer;white-space:nowrap;font:500 12.5px var(--sans);padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--fg)}
+.qnav button:hover,.qnav summary:hover{border-color:var(--accent);color:var(--accent)}
+.qnav button:focus-visible,.qnav summary:focus-visible{outline:2px solid var(--accent)}
+.qnav details{position:relative;flex:none}
+.qnav summary::-webkit-details-marker{display:none}
+.qnav-m{position:absolute;right:0;top:calc(100% + 6px);z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:6px;min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:13px}
+.thbtn{font-size:12px!important;padding:3px 8px!important}
+.today .ph{border-bottom:0}
+#td-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:6px;padding:0 12px 12px}
+#td-list .mnote{grid-column:1/-1;margin:0}
+.tdi{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px;line-height:1.35}
+.tdi:hover{border-color:var(--accent)} .tdi:focus-visible{outline:2px solid var(--accent)}
+.tdi i{flex:none;width:8px;height:8px;border-radius:50%;margin-top:5px;background:var(--accent)}
+.tdi.down i{background:var(--down)} .tdi.warn i{background:var(--warn)} .tdi.up i{background:var(--up)}
+.tdi.down{background:var(--down-bg);border-color:transparent} .tdi.warn{background:var(--warn-bg);border-color:transparent}
+#cl-warn{display:grid;gap:6px;padding:0 12px}
+#cl-warn:not(:empty){padding-top:10px}
+#cl-warn code{font-family:var(--mono);font-size:12px}
+.clbar{display:flex;gap:8px 10px;align-items:center;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid var(--line)}
+.clbar .meta{font:12px var(--mono);color:var(--muted);margin-left:auto}
+.mt.clt{min-width:860px}
+.clt td a{color:inherit;font-weight:600;text-decoration:none} .clt td a:hover{color:var(--accent)}
+.clfeed{max-height:420px;overflow:auto}
+#cl-body .mnote{padding:12px}
+@media (max-width:700px){
+  .sgl{min-width:0}
+  .sgl .sghd{display:none}
+  .sgr{grid-template-columns:repeat(10,minmax(0,1fr));gap:6px 4px;padding:10px 10px}
+  .sgr>:nth-child(1){grid-column:span 5} .sgr>:nth-child(2){grid-column:span 5;text-align:right}
+  .sgr>:nth-child(3){grid-column:span 3;text-align:left} .sgr>:nth-child(4){grid-column:span 4;text-align:center} .sgr>:nth-child(5){grid-column:span 3}
+  .sgr>:nth-child(3)::before,.sgr>:nth-child(4)::before,.sgr>:nth-child(5)::before{display:block;font:400 10px var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .sgr>:nth-child(3)::before{content:"Giriş"} .sgr>:nth-child(4)::before{content:"Şu an"} .sgr>:nth-child(5)::before{content:"Sonuç"}
+  .sgr>:nth-child(6){grid-column:span 7} .sgr>:nth-child(7){grid-column:span 3}
+  .sgr>:nth-child(n+8){grid-column:span 2}
+  .sgd{padding:10px}
+  .sgnums{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sgm{grid-template-columns:minmax(0,1fr) auto}
+  #td-list{grid-template-columns:1fr}
+  .clbar .meta{margin-left:0}
+  header{position:relative}
+  .panel,.alarms{scroll-margin-top:8px}
+  .fab{display:flex}
+}
+.fab{display:none;position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:30;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;border:0;background:var(--accent);color:#fff;font:600 13px var(--sans);box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
 @media (max-width:1150px){ .posgrid{grid-template-columns:1fr} .poscol{border-right:0;border-bottom:1px solid var(--line)} }
 @media (max-width:900px){ .rdgrid{grid-template-columns:1fr} .rdcol{border-right:0;border-bottom:1px solid var(--line);max-height:none} .dgrid{grid-template-columns:1fr} .dgrid>.dcol{border-right:0;border-bottom:1px solid var(--line)} .regime{grid-template-columns:1fr} .rgmain{border-right:0;border-bottom:1px solid var(--line)} }
 @media (max-width:520px){ .rcf{grid-template-columns:1fr} .dchart{height:320px} }
@@ -446,6 +497,7 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
     <h1>Yükselenler Panosu</h1>
     <div class="status">
       <button class="regchip" id="regchip" type="button" hidden>Piyasa havası</button>
+      <button class="btn thbtn" id="thbtn" type="button">Tema</button>
       <a class="badge" id="badge" href="#alarms">0 yeni alarm</a>
       <span class="dot" id="dot"></span><span id="stat">Bağlanıyor…</span>
       <span id="prog"></span>
@@ -463,6 +515,8 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
     <input type="search" id="q" placeholder="Coin ara (örn. SOL)" autocomplete="off" aria-label="Coin ara">
   </div>
   <p class="note" id="note"></p>
+  <nav class="qnav" id="qnav" aria-label="Bölümlere git"><div class="qnav-l" id="qnav-l"></div>
+    <details id="qnav-d"><summary>Bölümleri seç</summary><div class="qnav-m" id="qnav-m"></div></details></nav>
 </header>
 
 <div class="layout">
@@ -474,6 +528,11 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
         <p class="rgpump" id="rg-pump"></p>
       </div>
       <div class="rgparts" id="rg-parts"></div>
+    </section>
+
+    <section class="panel macro today" aria-labelledby="h-td" id="today">
+      <div class="ph"><h2 id="h-td">Bugün dikkat et</h2><span class="meta" id="td-n"></span></div>
+      <div id="td-list"></div>
     </section>
 
     <section class="panel macro" aria-labelledby="h-sg" id="sigsec">
@@ -516,6 +575,17 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
       <div id="sg-karne"></div>
     </section>
 
+    <section class="panel macro" aria-labelledby="h-cl" id="cloudsec">
+      <div class="ph">
+        <h2 id="h-cl">v7 Bulut Takibi</h2>
+        <div class="seg sm" role="group" aria-label="Görünüm" id="cl-tabs"><button data-v="open">Açık pozisyonlar</button><button data-v="feed">Son sinyaller</button></div>
+        <span class="meta" id="cl-st"></span>
+        <p class="help">Bilgisayarın kapalıyken de GitHub'da her 15 dakikada çalışan v7 alarmının sonuçları: sistemin şu an pozisyonda olduğu coinler ve gönderdiği son sinyaller. Her cihazda aynı görünür. <span id="cl-meta"></span></p>
+      </div>
+      <div id="cl-warn"></div>
+      <div id="cl-body"></div>
+    </section>
+
     <section class="panel macro" aria-labelledby="h-bt" id="btsec">
       <div class="ph">
         <h2 id="h-bt">Geriye Dönük Test</h2>
@@ -555,7 +625,7 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
       </div>
     </section>
 
-    <section class="panel p-rise" aria-labelledby="h-rise">
+    <section class="panel p-rise" aria-labelledby="h-rise" id="sec-rise">
       <div class="ph">
         <h2 id="h-rise">Yükselenler</h2>
         <div class="seg sm" role="group" aria-label="Yön" id="dir"><button data-v="up">Yükselen</button><button data-v="down">Düşen</button></div>
@@ -568,7 +638,7 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
       </div>
     </section>
 
-    <section class="panel p-vol" aria-labelledby="h-vol">
+    <section class="panel p-vol" aria-labelledby="h-vol" id="sec-vol">
       <div class="ph">
         <h2 id="h-vol">Hacim Patlaması</h2>
         <div class="seg sm" role="group" aria-label="Hacim penceresi" id="vw"><button data-v="15">15 dk</button><button data-v="60">1 saat</button><button data-v="240">4 saat</button><button data-v="1440">24 saat</button></div>
@@ -581,7 +651,7 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
       </div>
     </section>
 
-    <section class="panel p-fut" aria-labelledby="h-fut">
+    <section class="panel p-fut" aria-labelledby="h-fut" id="sec-fut">
       <div class="ph">
         <h2 id="h-fut">Vadeli Göstergeler</h2>
         <div class="seg sm" role="group" aria-label="Sıralama" id="fs"><button data-v="oi">AP artışı</button><button data-v="fh">Fonlama +</button><button data-v="fl">Fonlama −</button></div>
@@ -594,7 +664,7 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
       </div>
     </section>
 
-    <section class="panel p-rs" aria-labelledby="h-rs">
+    <section class="panel p-rs" aria-labelledby="h-rs" id="sec-rs">
       <div class="ph">
         <h2 id="h-rs">BTC'ye Göre Güç</h2>
         <span class="meta" id="btcchg">BTC: –</span>
@@ -784,6 +854,8 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
     </div>
   </aside>
 </div>
+
+<button class="fab" id="fab" type="button" aria-label="Bölümlere git">☰ Bölümler</button>
 
 <dialog id="dlg" class="dlg" aria-labelledby="dlg-t">
   <div class="dh">
@@ -2956,6 +3028,135 @@ function startV7(){
   setInterval(briefTick, 60000); setTimeout(briefTick, 20000);
 }
 
+/* ================= BULUT TAKİBİ ================= */
+const GH = (()=>{ const h=location.hostname.match(/^([a-z0-9-]+)\.github\.io$/i), p=location.pathname.split("/").filter(Boolean)[0];
+  return h && p ? {o:h[1], r:p} : {o:"okanasl2809", r:"coin-panosu"}; })();
+let cloud=lsGet("yp-cloud",null), cloudRun=null, cloudTab=lsGet("yp-cloudtab","open"), cloudTf="all", cloudErr=null;
+const cloudPx={};
+async function cloudLoad(){
+  try{
+    const r=await fetch(`https://raw.githubusercontent.com/${GH.o}/${GH.r}/main/veri/bulut.json?t=${Math.floor(Date.now()/60000)}`,{cache:"no-store"});
+    if(r.status===404){ cloudErr="yok"; renderCloud(); return; }
+    if(!r.ok) throw new Error(r.status);
+    const d=await r.json(); if(d && d.v===1){ cloud=d; cloudErr=null; lsSet("yp-cloud",d); }
+  }catch(e){ cloudErr = cloud ? null : "ağ"; }
+  renderCloud();
+}
+async function cloudHealth(){
+  try{
+    const r=await fetch(`https://api.github.com/repos/${GH.o}/${GH.r}/actions/workflows/alarm.yml/runs?per_page=1`);
+    if(!r.ok) return; const d=await r.json(), w=d.workflow_runs&&d.workflow_runs[0];
+    if(w) cloudRun={t:Date.parse(w.updated_at||w.created_at), ok:w.conclusion==="success", st:w.status, url:w.html_url};
+  }catch(e){}
+  renderCloud();
+}
+async function cloudPrices(){
+  if(!cloud || !cloud.open || !cloud.open.length) return;
+  const miss=cloud.open.some(o=>!(coins.get("s:"+o.sym)||{}).price);
+  if(!miss) return;
+  try{ const all=await api("s","/ticker/price"); if(Array.isArray(all)) for(const x of all) cloudPx[x.symbol]=+x.price; }catch(e){}
+}
+const cPrice = sym => (coins.get("s:"+sym)||{}).price || cloudPx[sym] || null;
+const ago = t => { const m=Math.round((Date.now()-t)/60000); return m<1?"az önce":m<60?`${m} dk önce`:m<1440?`${Math.round(m/60)} saat önce`:`${Math.round(m/1440)} gün önce`; };
+function renderCloud(){
+  const box=$("cl-body"); if(!box) return;
+  const st=$("cl-st"), warn=[];
+  if(cloudRun){ const late=Date.now()-cloudRun.t>50*60000;
+    st.innerHTML=`Bulut son çalışma: <b class="${cloudRun.ok&&!late?"txt up":"txt down"}">${ago(cloudRun.t)}${cloudRun.ok?"":" · hata"}</b>${cloud&&cloud.upd?` · veri ${ago(cloud.upd)}`:""}`;
+    if(late) warn.push(`Bulut alarmı ${ago(cloudRun.t)} çalıştı. GitHub bazen gecikir; 2 saatten uzun sürerse depoda Actions sekmesinden kontrol et.`);
+    if(!cloudRun.ok && cloudRun.st==="completed") warn.push(`Son çalışma hata verdi. <a href="${cloudRun.url}" target="_blank" rel="noopener">Ayrıntıyı gör</a>.`);
+  } else st.textContent = cloud&&cloud.upd ? `Veri ${ago(cloud.upd)}` : "";
+  if(cloud && cloud.tg===false) warn.push(`Telegram anahtarı depoya eklenmemiş, bu yüzden bulut alarmı mesaj gönderemiyor. Depoda <b>Settings → Secrets and variables → Actions</b> bölümüne <code>TELEGRAM_TOKEN</code> ve <code>TELEGRAM_CHAT</code> ekle.`);
+  $("cl-warn").innerHTML=warn.map(w=>`<div class="warnbox">${w}</div>`).join("");
+  if(!cloud){ box.innerHTML=`<p class="mnote">${cloudErr==="yok"?"Bulut alarmı henüz veri yayınlamadı. İlk mum kapanışından sonra burada görünür.":cloudErr==="ağ"?"Bulut verisine ulaşılamadı. İnternet bağlantını kontrol et.":"Bulut verisi yükleniyor…"}</p>`; return; }
+  $("cl-meta").textContent=`${cloud.coins} coin · ${cloud.tfs.map(t=>SG_TF[t].lbl).join(", ")}${cloud.pump?" · pump radarı":""}`;
+  document.querySelectorAll("#cl-tabs button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v===cloudTab));
+  if(cloudTab==="open"){
+    const tfs=[...new Set(cloud.open.map(o=>o.tf))];
+    let rows=cloud.open.filter(o=>cloudTf==="all"||o.tf===cloudTf).map(o=>{ const p=cPrice(o.sym); return {...o, p, r: p? (p/o.entry-1)*100 : null, d: p&&o.stop? (p-o.stop)/p*100 : null}; });
+    rows.sort((a,b)=>(b.r??-999)-(a.r??-999));
+    const mine=new Set(signals.filter(s=>s.status!=="closed").map(s=>s.sym+"|"+s.tf));
+    box.innerHTML = `<div class="clbar"><span class="lbl">Zaman dilimi</span><div class="seg sm" id="cl-tf"><button data-v="all" aria-pressed="${cloudTf==="all"}">Hepsi</button>${tfs.map(t=>`<button data-v="${t}" aria-pressed="${cloudTf===t}">${SG_TF[t].lbl}</button>`).join("")}</div><span class="meta">${rows.length} açık pozisyon · ${rows.filter(x=>x.r>0).length} kârda</span></div>`
+      + (rows.length ? `<div class="mtw"><table class="mt clt"><thead><tr><th>Coin</th><th>Zaman</th><th>Sinyal</th><th>Giriş tarihi</th><th>Giriş</th><th>Şu an</th><th>Sonuç</th><th>Stop</th><th title="Fiyatın stopa uzaklığı">Stopa</th><th>Kilit</th><th></th></tr></thead><tbody>${rows.map(o=>{ const [b]=split(o.sym), own=mine.has(o.sym+"|"+o.tf);
+          return `<tr><td class="mn"><a href="${tvUrl({sym:o.sym,m:"s"})}" target="_blank" rel="noopener">${b}</a></td><td>${SG_TF[o.tf].lbl}</td><td style="font-family:var(--sans)">${V7.NAMES[o.code]||"TREND AL"}</td><td>${new Date(o.entryT+1).toLocaleDateString("tr-TR",{day:"2-digit",month:"2-digit"})}</td><td>${fmtP(o.entry)}</td><td>${o.p?fmtP(o.p):"–"}</td><td class="${o.r==null?"":o.r>=0?"up":"down"}">${o.r==null?"–":pct(o.r)}</td><td>${fmtP(o.stop)}</td><td class="${o.d!=null&&o.d<2?"down":""}">${o.d==null?"–":"%"+nf1.format(o.d)}</td><td>${o.lvl?o.lvl+". basamak":"–"}</td><td>${own?'<span class="scok">takipte</span>':`<button class="btn" type="button" data-cladd="${o.sym}|${o.tf}">Takibe al</button>`}</td></tr>`; }).join("")}</tbody></table></div>`
+        : '<p class="mnote">Şu an v7\'ye göre açık pozisyon yok.</p>')
+      + `<p class="sgleg">Bulut, izlediği coinlerde v7 kurallarına göre şu an "pozisyonda" olanları gösterir. Stop ve kilitler mum kapanışlarında güncellenir. "Takibe al" ile Sinyallerim'e eklersen SAT ve STOP alarmları bu cihazda da çalar.</p>`;
+  } else {
+    const f=cloud.feed||[];
+    box.innerHTML = f.length ? `<div class="clfeed">${f.slice(0,80).map(x=>{ const [b,q]=split(x.sym), buy=[1,2,3,4,9,10,11,12].includes(x.code), ex=[5,6,15,20].includes(x.code);
+        return `<div class="scr ${buy?"buy":ex?"dn":"wt"}"><span class="sct">${new Date(x.t+1).toLocaleString("tr-TR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}</span>
+          <a href="${tvUrl({sym:x.sym,m:"s"})}" target="_blank" rel="noopener"><b>${b}</b><span class="q">/${q}</span></a>
+          <span class="scn">${V7.NAMES[x.code]||""}<small>${SG_TF[x.tf]?SG_TF[x.tf].lbl:""}${x.pts!=null?" · puan "+x.pts+"/4":""}${x.lk?" · "+x.lk+". basamak":""}</small></span>
+          <span class="r">${fmtP(x.px)}${x.pnl!=null?`<small class="${x.pnl>=0?"txt up":"txt down"}">${pct(x.pnl)}</small>`:x.stop?`<small>stop ${fmtP(x.stop)}</small>`:""}</span>
+          <span>${buy?`<button class="btn" type="button" data-clsig="${escH(x.k)}">Ekle</button>`:""}</span></div>`; }).join("")}</div>`
+      : '<p class="mnote">Bulut henüz sinyal göndermedi. Yeni sinyaller mum kapanışlarında burada ve Telegram\'da görünür.</p>';
+  }
+}
+$("cloudsec").addEventListener("click",e=>{
+  const t=e.target.closest("#cl-tabs button"); if(t){ cloudTab=t.dataset.v; lsSet("yp-cloudtab",cloudTab); renderCloud(); return; }
+  const f=e.target.closest("#cl-tf button"); if(f){ cloudTf=f.dataset.v; renderCloud(); return; }
+  const a=e.target.closest("[data-cladd]"); if(a){ const [sym,tf]=a.dataset.cladd.split("|"), o=cloud.open.find(x=>x.sym===sym&&x.tf===tf); if(!o) return;
+    const s=addSignal({kind:"buy", type:"trend", code:o.code||1, tf, sym, m:"s", entry:o.entry, stop:o.stop0}, o.entryT); if(s){ s.src="bulut"; if(o.stop>o.stop0) s.stopManual=o.stop; saveSig(); } renderSignals(); renderCloud(); return; }
+  const g=e.target.closest("[data-clsig]"); if(g){ const x=(cloud.feed||[]).find(y=>y.k===g.dataset.clsig); if(!x) return;
+    const type=SC_TYPE[x.code]||"trend"; const s=addSignal({kind:"buy", type, code:x.code, tf:x.tf, sym:x.sym, m:"s", entry:x.px, stop:x.stop, pos:x.pos, target:x.target, pts:x.pts!=null?x.pts+"/4":null}, x.t);
+    if(s){ s.src="bulut"; saveSig(); g.outerHTML='<span class="scok">eklendi</span>'; renderSignals(); } }
+});
+
+/* ================= BUGÜN DİKKAT ET ================= */
+function todayItems(){
+  const it=[], now=Date.now();
+  if(btcReg && !btcReg.up) it.push({c:"down", t:"BTC rejimi aşağı: yeni trend AL sinyalleri önerilmiyor, açık işlemlerde stopları gözden geçir.", go:"sigsec"});
+  for(const s of signals){
+    const [b]=split(s.sym), lbl=`${b} ${SG_TF[s.tf].lbl}`;
+    if(s.status==="closed" && s.exit && now-s.exit.t<24*3600000){ const en=(s.calc&&s.calc.entry)||s.entry; it.push({c:s.exit.kind==="target"?"up":"down", t:`${lbl}: ${s.exit.kind==="sell"?"SAT":s.exit.kind==="target"?"HEDEF":"STOP"} geldi${en?` (${pct((s.exit.px/en-1)*100)})`:""}. Borsada pozisyonu kapattığından emin ol.`, go:"sigsec", id:s.id}); continue; }
+    if(s.status!=="open" || !s.calc) continue;
+    const p=sgPrice(s), A=sgAction(s,p);
+    if(A.cls==="warn") it.push({c:"warn", t:`${lbl}: ${A.d}`, go:"sigsec", id:s.id});
+    else if(p && s.calc.cur && (p-s.calc.cur)/p<0.02) it.push({c:"warn", t:`${lbl}: fiyat stopa %${nf1.format((p-s.calc.cur)/p*100)} uzaklıkta.`, go:"sigsec", id:s.id});
+    if(s.calc.ev && s.calc.ev.length){ const x=s.calc.ev[s.calc.ev.length-1]; if(now-x.t<24*3600000) it.push({c:"up", t:`${lbl}: kâr kilidi ${x.lvl}. basamak. Borsadaki stopu ${fmtP(x.stop)} seviyesine taşı.`, go:"sigsec", id:s.id}); }
+  }
+  for(const p of positions){ const c=coins.get(p.key), L=liqOf(p); if(!c||!c.price||!L) continue; const d=p.dir==="long"?(c.price-L)/c.price*100:(L-c.price)/c.price*100; if(d<8) it.push({c:d<3?"down":"warn", t:`${c.base} pozisyonu: likidasyona %${nf1.format(Math.max(0,d))} kaldı.`, go:"possec"}); if(!p.stop) it.push({c:"warn", t:`${c.base} pozisyonunda stop yok.`, go:"possec"}); }
+  const P=pfCalc(); if(P.total>pfMax) it.push({c:"down", t:`Toplam açık risk bütçeyi aşıyor (%${nf1.format(P.total)} / %${nf1.format(pfMax)}).`, go:"possec"});
+  const sc24=scFeed.filter(x=>now-x.t<24*3600000 && SC_BUY.has(x.code)), cl24=cloud&&cloud.feed? cloud.feed.filter(x=>now-x.t<24*3600000 && [1,2,3,4,9,10,11,12].includes(x.code)) : [];
+  if(sc24.length) it.push({c:"info", t:`Pano taraması son 24 saatte ${sc24.length} AL sinyali buldu: ${[...new Set(sc24.map(x=>split(x.sym)[0]))].slice(0,8).join(", ")}.`, go:"sigsec"});
+  if(cl24.length) it.push({c:"info", t:`Bulut son 24 saatte ${cl24.length} AL sinyali verdi: ${[...new Set(cl24.map(x=>split(x.sym)[0]))].slice(0,8).join(", ")}.`, go:"cloudsec"});
+  if(cloud && cloud.tg===false) it.push({c:"warn", t:"Bulut alarmı Telegram'a mesaj gönderemiyor: anahtar eklenmemiş.", go:"cloudsec"});
+  return it;
+}
+function renderToday(){
+  const box=$("td-list"); if(!box) return;
+  const it=todayItems(), ord={down:0,warn:1,up:2,info:3}; it.sort((a,b)=>ord[a.c]-ord[b.c]);
+  $("td-n").textContent = it.filter(x=>x.c==="down"||x.c==="warn").length ? `${it.filter(x=>x.c==="down"||x.c==="warn").length} konu dikkat istiyor` : "";
+  box.innerHTML = it.length ? it.slice(0,12).map(x=>`<button class="tdi ${x.c}" type="button" data-go="${x.go}"${x.id?` data-id="${x.id}"`:""}><i></i><span>${x.t}</span></button>`).join("") : '<p class="mnote">Şu an dikkat isteyen bir şey yok. Yeni sinyal, stop yaklaşması ya da SAT olursa burada görünür.</p>';
+}
+$("today").addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(!b) return; if(b.dataset.id){ sgOpen.add(b.dataset.id); renderSignals(); } goSec(b.dataset.go); });
+
+/* ================= HIZLI GEÇİŞ, BÖLÜM GİZLEME, TEMA ================= */
+const SECS=[["today","Bugün"],["sigsec","Sinyallerim"],["cloudsec","Bulut"],["btsec","Test"],["radar","Pump radarı"],["sec-rise","Yükselenler"],["sec-vol","Hacim"],["sec-fut","Vadeli"],["sec-rs","BTC'ye güç"],["possec","Pozisyonlar"],["macro","Ana piyasalar"],["liqsec","Likidasyon"],["newlist","Listelemeler"],["karnesec","Karne"],["regime","Piyasa havası"]];
+let hid=new Set(lsGet("yp-hide",[]));
+function goSec(id){ const el=$(id); if(!el) return; if(el.hidden){ hid.delete(id); applyHide(); } el.scrollIntoView({behavior:reduceMotion?"auto":"smooth", block:"start"}); }
+function applyHide(){ for(const [id] of SECS){ const el=$(id); if(el) el.hidden=hid.has(id); } lsSet("yp-hide",[...hid]); renderNav(); }
+function renderNav(){
+  $("qnav-l").innerHTML = SECS.filter(([id])=>!hid.has(id)).map(([id,l])=>`<button type="button" data-go="${id}">${l}</button>`).join("") + `<button type="button" data-go="alarms">Alarmlar</button>`;
+  $("qnav-m").innerHTML = SECS.map(([id,l])=>`<label class="chk"><input type="checkbox" data-sec="${id}"${hid.has(id)?"":" checked"}> ${l}</label>`).join("");
+}
+$("qnav").addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(b) goSec(b.dataset.go); });
+$("qnav-m").addEventListener("change",e=>{ const c=e.target.closest("[data-sec]"); if(!c) return; if(c.checked) hid.delete(c.dataset.sec); else hid.add(c.dataset.sec); applyHide(); });
+document.addEventListener("click",e=>{ const d=$("qnav-d"); if(d.open && !d.contains(e.target)) d.open=false; });
+let theme=lsGet("yp-theme","auto");
+function applyTheme(){ if(theme==="auto") delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme=theme; $("thbtn").textContent= theme==="auto"?"Tema: otomatik":theme==="dark"?"Tema: koyu":"Tema: açık"; }
+$("thbtn").addEventListener("click",()=>{ theme= theme==="auto"?"dark":theme==="dark"?"light":"auto"; lsSet("yp-theme",theme); applyTheme(); if(typeof btDraw==="function") btDraw(); });
+applyTheme();
+$("fab").addEventListener("click",()=>{ window.scrollTo({top:0,behavior:reduceMotion?"auto":"smooth"}); });
+
+function startUx(){
+  applyHide(); renderToday(); renderCloud();
+  cloudLoad(); setInterval(cloudLoad, 5*60000);
+  cloudHealth(); setInterval(cloudHealth, 10*60000);
+  setInterval(()=>{ cloudPrices().then(renderCloud); }, 60000); setTimeout(()=>cloudPrices().then(renderCloud), 6000);
+  setInterval(renderToday, 10000); setTimeout(renderToday, 5000);
+}
+
 /* ---------- başlat ---------- */
 new ResizeObserver(()=>document.documentElement.style.setProperty("--hdr",$("hdr").offsetHeight+"px")).observe($("hdr"));
 renderRules(); renderLog(); sndUI(); ntfUI(); badge();
@@ -2975,7 +3176,7 @@ setInterval(posTick, 3000);
 setInterval(karneTick, 60000); setTimeout(karneTick, 20000);
 setTimeout(()=>{ listingsLoop(); setInterval(listingsLoop, 30*60000); }, 15000);
 setInterval(dlgRefresh, 2000); setInterval(loadDlgBook, 3000);
-setTimeout(startSignals, 1200); setTimeout(startV7, 1500);
+setTimeout(startSignals, 1200); setTimeout(startV7, 1500); setTimeout(startUx, 1700);
 async function wake(){ try{ if("wakeLock" in navigator && document.visibilityState==="visible") await navigator.wakeLock.request("screen"); }catch(e){} }
 wake(); document.addEventListener("visibilitychange",wake);
 </script>
