@@ -2454,28 +2454,31 @@ function tgMsg(t,cls){ const m=$("tgmsg"); m.innerHTML=t; m.className="tgmsg "+(
 $("tgtok").addEventListener("change",e=>{ tg.tok=e.target.value.trim(); tgSave(); });
 $("tgchat").addEventListener("change",e=>{ tg.chat=e.target.value.trim(); tgSave(); });
 $("tgon").addEventListener("change",e=>{ tg.on=e.target.checked; tgSave(); if(tg.on && (!tg.tok||!tg.chat)) tgMsg("Önce bot anahtarını ve sohbet numarasını gir.","bad"); });
-$("tgfind").addEventListener("click",async ()=>{
+async function tgFind(){
   tg.tok=$("tgtok").value.trim(); tgSave();
-  if(!tg.tok){ tgMsg("Önce bot anahtarını yapıştır.","bad"); return; }
+  if(!tg.tok){ tgMsg("Önce bot anahtarını yapıştır.","bad"); return false; }
   tgMsg("Aranıyor…");
   try{
     const r=await fetch(`https://api.telegram.org/bot${tg.tok}/getUpdates`); const j=await r.json();
-    if(!j.ok){ tgMsg("Anahtar geçersiz görünüyor. @BotFather'ın verdiği anahtarı tam olarak kopyaladığından emin ol.","bad"); return; }
+    if(!j.ok){ tgMsg("Anahtar geçersiz görünüyor. @BotFather'ın verdiği anahtarı tam olarak kopyaladığından emin ol.","bad"); return false; }
     const ups=(j.result||[]).filter(u=>u.message||u.my_chat_member||u.channel_post);
     const last=ups.length ? (ups[ups.length-1].message||ups[ups.length-1].channel_post||ups[ups.length-1].my_chat_member) : null;
-    if(!last){ tgMsg("Bota henüz mesaj gelmemiş. Telegram'da botuna \"merhaba\" yaz ve tekrar dene.","bad"); return; }
+    if(!last){ tgMsg("Bota henüz mesaj gelmemiş. Telegram'da botunu aç, Başlat'a bas, \"merhaba\" yaz ve tekrar dene.","bad"); return false; }
     tg.chat=String(last.chat.id); tgSave(); tgUI();
-    tgMsg(`Sohbet numarası bulundu: ${tg.chat}. Şimdi "Deneme mesajı gönder"e bas.`,"ok");
+    tgMsg(`Sohbet numarası bulundu: ${tg.chat}. Şimdi "Deneme mesajı gönder"e bas.`,"ok"); return true;
   }catch(e){
     const u=`https://api.telegram.org/bot${encodeURIComponent(tg.tok)}/getUpdates`;
-    tgMsg(`Otomatik bulunamadı. <a href="${u}" target="_blank" rel="noopener">Bu sayfayı aç</a>, "chat":{"id": yazısından sonraki sayıyı kopyalayıp sohbet numarası kutusuna yapıştır.`,"bad");
+    tgMsg(`Otomatik bulunamadı. <a href="${u}" target="_blank" rel="noopener">Bu sayfayı aç</a>, "chat":{"id": yazısından sonraki sayıyı kopyalayıp sohbet numarası kutusuna yapıştır.`,"bad"); return false;
   }
-});
+}
+$("tgfind").addEventListener("click",()=>tgFind());
 $("tgtest").addEventListener("click",async ()=>{
   tg.tok=$("tgtok").value.trim(); tg.chat=$("tgchat").value.trim(); tgSave();
-  if(!tg.tok || !tg.chat){ tgMsg("Bot anahtarı ve sohbet numarası gerekli.","bad"); return; }
+  if(!tg.tok){ tgMsg("Önce bot anahtarını yapıştır.","bad"); return; }
+  if(!tg.chat && !(await tgFind())) return;
   await tgSendNow(`Yükselenler Panosu: deneme mesajı (${timeStr(Date.now())}). Bu mesajı görüyorsan alarmlar Telegram'a gelecek.`);
-  tgMsg("Gönderildi. Telegram'a mesaj geldiyse kurulum tamam; \"Alarmları Telegram'a gönder\" kutusunu işaretle. Gelmediyse anahtarı ve numarayı kontrol et.","ok");
+  tg.on=true; tgSave(); tgUI();
+  tgMsg(`Gönderildi ve Telegram alarmları açıldı. Sohbet numaran: <b>${tg.chat}</b> (bulut alarmı için GitHub'a TELEGRAM_CHAT olarak bunu ekleyeceksin). Mesaj gelmediyse anahtarı kontrol et.`,"ok");
 });
 
 /* ================= ALARM KARNESİ ================= */
