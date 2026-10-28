@@ -160,7 +160,7 @@ function save() {
 }
 function publish() {
   const pub = { v: 1, hafta: weekId(Date.now()), surekli: LOOP, btcUp: state.btcUp, tg: !!(tok && chat), coins: syms.length, tfs: CFG.zaman_dilimleri || [], pump: !!CFG.pump_radari,
-    feed: state.feed.slice(0, 100), open: Object.values(state.openByTf).flat().map(({ close, ...o }) => o), balina: (state.whale || []).slice(0, 60) };
+    canli: whale ? whale.stats().msgs > 0 : null, feed: state.feed.slice(0, 100), open: Object.values(state.openByTf).flat().map(({ close, ...o }) => o), balina: (state.whale || []).slice(0, 60) };
   let old = null; try { old = JSON.parse(fs.readFileSync(PUB_F, "utf8")); delete old.upd; } catch (e) {}
   if (JSON.stringify(old) === JSON.stringify(JSON.parse(JSON.stringify(pub)))) return;
   fs.mkdirSync(path.dirname(PUB_F), { recursive: true }); fs.writeFileSync(PUB_F, JSON.stringify({ upd: Date.now(), ...pub }));
