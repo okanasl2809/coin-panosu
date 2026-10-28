@@ -183,6 +183,7 @@ function tickDue() {
 let whale = null;
 async function main() {
   console.log(`Mod: ${LOOP ? "sürekli" : "tek tur"} · Telegram ${tok && chat ? "bağlı" : "anahtar yok"}`);
+  if (tok && chat && !state.tgHello) { state.tgHello = true; tg("✅ Bulut alarmı bağlandı. Bilgisayarın kapalıyken de v7 sinyalleri (AL, SAT, STOP, kâr kilidi, pump), yüklü alımlar, büyük alım emirleri ve her sabah 09:00 özeti buraya gelecek."); }
   await loadList();
   const W = CFG.balina || {};
   if (LOOP && W.acik !== false && globalThis.WebSocket) {
