@@ -1,12 +1,30 @@
 {
-  "aciklama": "Bulut alarmı ayarları. 'otomatik_ilk' = 24 saatlik hacme göre en büyük kaç USDT coini izlensin. 'ekstra' listesine istediğin coinleri yaz (örn. \"PEPEUSDT\"). Zaman dilimleri: 60 = 1 saat, 240 = 4 saat, D = günlük.",
+  "aciklama": "Bulut alarmı ayarları. 'otomatik_ilk' = 24 saatlik hacme göre en büyük kaç USDT coini izlensin. 'ekstra' listesine istediğin coinleri yaz (örn. \"PEPEUSDT\"). Zaman dilimleri: 60 = 1 saat, 240 = 4 saat, D = günlük. 'balina': yüklü alım/satım ve büyük alış emri takibi; min_usd = en küçük işlem büyüklüğü (dolar), oran = coinin 24 saatlik hacminin bu oranı eşik sayılır (büyük olan geçerli).",
   "otomatik_ilk": 80,
   "ekstra": [],
   "haric": [],
-  "zaman_dilimleri": ["240", "D"],
+  "zaman_dilimleri": [
+    "240",
+    "D"
+  ],
   "pump_radari": true,
   "sikisma_sinyalleri": false,
   "cikis_ve_kilit_mesajlari": true,
   "sabah_ozeti": true,
-  "sabah_ozeti_saati_tr": 9
+  "sabah_ozeti_saati_tr": 9,
+  "balina": {
+    "acik": true,
+    "coin_sayisi": 40,
+    "min_usd": 100000,
+    "oran": 0.0004,
+    "satislari_da_bildir": false,
+    "bekleme_dk": 15,
+    "duvar": true,
+    "duvar_coin": 15,
+    "duvar_sn": 60,
+    "duvar_min_usd": 250000,
+    "duvar_oran": 0.001,
+    "duvar_uzaklik": 3,
+    "duvar_bekleme_dk": 30
+  }
 }

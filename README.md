@@ -9,6 +9,7 @@ Bilgisayarda, tablette ve telefonda aynı linkle açılır. Telefonda ve tablett
 ## Panoda neler var
 - **Bugün dikkat et:** SAT/STOP gelen, stopa yaklaşan, kâr kilidi basamağı geçen sinyaller ve riskli pozisyonlar tek yerde.
 - **Sinyallerim:** TradingView v7 alarmlarını yapıştır ya da panonun otomatik taramasına bırak; her sinyal v7 kurallarıyla canlı izlenir.
+- **Balina Takibi:** Yüklü piyasa alımları/satımları, coin bazında balina net akışı ve emir defterindeki büyük alış/satış emirleri (dolunca ya da çekilince haber verir).
 - **v7 Bulut Takibi:** Bilgisayar kapalıyken bulutta çalışan alarmın sonuçları (sistemin pozisyonda olduğu coinler, son sinyaller). Her cihazda aynı.
 - **Geriye dönük test**, Pump Radarı, hacim ve fiyat listeleri, pozisyon ve portföy riski, ana piyasalar, likidasyon haritası, alarm karnesi.
 - Üstteki düğmelerle bölümlere hızlı geç; **Bölümleri seç** ile kullanmadıklarını gizle. Telefonda sağ alttaki **Bölümler** düğmesi başa döndürür.
@@ -20,7 +21,7 @@ Sinyallerin, pozisyonların ve ayarların her cihazın kendi tarayıcısında sa
 3. O cihazda aynı bölümden **Yedeği yükle**'ye bas ve dosyayı seç.
 
 ## Bilgisayar kapalıyken Telegram alarmı (bulut alarmı)
-GitHub her 15 dakikada bir v7 kurallarını hesaplar ve yeni sinyalleri Telegram'a yollar: AL, SAT, STOP, kâr kilidi, pump ateşlemeleri, BTC rejimi değişimi ve her sabah 09:00 özeti.
+Bulut alarmı GitHub'da sürekli açık kalır (her çalışma ~5,5 saat, biri bitince sıradaki devralır). Her saat başı mum kapanışından ~20 saniye sonra v7 kurallarını hesaplar ve Telegram'a yollar: AL, SAT, STOP, kâr kilidi, pump ateşlemeleri, BTC rejimi değişimi, her sabah 09:00 özeti. Arada hacmi en yüksek 40 coinde **yüklü alımları** ve ilk 15 coinde **emir defterindeki büyük alış emirlerini** izler; büyük alış emri konduğunda ve dolduğunda da mesaj atar.
 
 Bir kez kurman yeterli:
 1. Telegram'da **@BotFather**'a `/newbot` yaz, bir isim ver. Sana verdiği **anahtarı (token)** kopyala. (Panoda Telegram'ı kurduysan aynı anahtarı kullanabilirsin.)
@@ -32,7 +33,7 @@ Bir kez kurman yeterli:
 
 İzlenen coinleri ve zaman dilimlerini `alarm/config.json` dosyasından değiştirebilirsin. Varsayılan ayar: hacmi en yüksek 80 USDT coini, 4 saatlik ve günlük grafik, pump radarı açık.
 
-Not: Depoda 60 gün hiç değişiklik olmazsa GitHub zamanlanmış çalışmayı durdurur. Durursa Actions sekmesinden yeniden açabilirsin.
+Balina eşikleri ve izlenen coin sayısı `alarm/config.json` içindeki `balina` bölümünden değiştirilebilir.
 
 ## Dosyalar
 - `index.html`: pano

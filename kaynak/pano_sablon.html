@@ -471,6 +471,32 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
   .fab{display:flex}
 }
 .fab{display:none;position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:30;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;border:0;background:var(--accent);color:#fff;font:600 13px var(--sans);box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}
+/* balina takibi */
+.whset{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px}
+.whset select{padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.whgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.whgrid .whcol:nth-child(2){border-right:0} .whgrid .whcol:nth-child(3){grid-column:1/-1;border-top:1px solid var(--line);border-right:0}
+.whcol{border-right:1px solid var(--line);min-width:0;display:flex;flex-direction:column}
+.whcol:last-child{border-right:0}
+.whcol .lqh{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+#wh-feed,#wh-flow,#wh-walls{max-height:420px;overflow:auto}
+#wh-feed .mnote,#wh-flow .mnote,#wh-walls .mnote,#wh-cloud .mnote{padding:10px 12px;margin:0}
+.whc{all:unset;cursor:pointer;display:flex;align-items:center;gap:3px;min-width:0;font-size:13px}
+.whc:hover b{color:var(--accent)} .whc:focus-visible{outline:2px solid var(--accent)}
+.whc .q{color:var(--muted);font-size:11.5px}
+.whr{display:grid;grid-template-columns:64px minmax(70px,1fr) 64px minmax(96px,auto);gap:6px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);border-left:3px solid var(--line);font-size:12.5px}
+.whr.buy{border-left-color:var(--up)} .whr.sell{border-left-color:var(--down)}
+.whr .r,.whf .r,.whw .r{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.whr .r small{display:block;color:var(--muted);font-size:10.5px}
+.whs{font:700 10.5px var(--sans);letter-spacing:.04em;padding:2px 6px;border-radius:5px;text-align:center;background:var(--bg);color:var(--muted)}
+.whr.buy .whs,.whw.bid .whs,.whw.ok .whs{color:var(--up);background:var(--up-bg)} .whr.sell .whs,.whw.ask .whs{color:var(--down);background:var(--down-bg)} .whw.pl .whs{color:var(--warn);background:var(--warn-bg)}
+.whf{display:grid;grid-template-columns:minmax(70px,1fr) 74px 74px 60px 80px;gap:6px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);font-size:12.5px}
+.whf .up{color:var(--up)} .whf .down{color:var(--down)}
+.whbar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden} .whbar i{display:block;height:100%} .whbar i.up{background:var(--up)} .whbar i.down{background:var(--down)}
+.whw{display:grid;grid-template-columns:minmax(90px,1fr) 60px 100px 100px 80px 70px;gap:6px;align-items:center;padding:6px 12px;border-bottom:1px solid var(--line);font-size:12.5px}
+.whw.hd{font:600 10.5px var(--sans);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg)}
+#wh-cloud{max-height:300px;overflow:auto}
+@media (max-width:760px){ .whgrid{grid-template-columns:1fr} .whcol{border-right:0;border-bottom:1px solid var(--line)} .whf{grid-template-columns:minmax(60px,1fr) 66px 66px 70px} .whf .whbar{display:none} .whw{grid-template-columns:minmax(52px,1fr) 50px 70px 74px 56px} .whw>:nth-child(6){display:none} .whc .q{display:none} }
 @media (max-width:1150px){ .posgrid{grid-template-columns:1fr} .poscol{border-right:0;border-bottom:1px solid var(--line)} }
 @media (max-width:900px){ .rdgrid{grid-template-columns:1fr} .rdcol{border-right:0;border-bottom:1px solid var(--line);max-height:none} .dgrid{grid-template-columns:1fr} .dgrid>.dcol{border-right:0;border-bottom:1px solid var(--line)} .regime{grid-template-columns:1fr} .rgmain{border-right:0;border-bottom:1px solid var(--line)} }
 @media (max-width:520px){ .rcf{grid-template-columns:1fr} .dchart{height:320px} }
@@ -584,6 +610,29 @@ dialog.dlg::backdrop{background:rgba(5,10,20,.55)}
       </div>
       <div id="cl-warn"></div>
       <div id="cl-body"></div>
+    </section>
+
+    <section class="panel macro" aria-labelledby="h-wh" id="whalesec">
+      <div class="ph">
+        <h2 id="h-wh">Balina Takibi</h2>
+        <span class="meta" id="wh-st"></span>
+        <p class="help">Büyük oyuncuların izi. <b>Yüklü işlemler</b>: birkaç saniye içinde tek seferde yapılan büyük piyasa alımları ve satımları. Eşik her coin için ayrı: günlük hacminin %0,04'ü, en az $100 bin. <b>Emir defteri</b>: fiyatın %3 yakınında bekleyen büyük alış ve satış emirleri (duvarlar). Alış duvarına satış gelip emir dolarsa "doldu", fiyat gelmeden kaybolursa "çekildi" yazar. Çekilen emirler sahte olabilir. Bu bilgiler tek başına al ya da sat sinyali değildir.</p>
+      </div>
+      <div class="whset">
+        <label class="lbl">İzlenen coin <select id="wh-n"><option value="20">İlk 20 + takip</option><option value="30">İlk 30 + takip</option><option value="50">İlk 50 + takip</option><option value="80">İlk 80 + takip</option></select></label>
+        <label class="lbl">Hassasiyet <select id="wh-sens"><option value="2">Düşük (sadece çok büyükler)</option><option value="1">Orta</option><option value="0.5">Yüksek (daha çok işlem)</option></select></label>
+        <label class="chk"><input type="checkbox" id="wh-abuy"> Yüklü alımda alarm</label>
+        <label class="chk"><input type="checkbox" id="wh-asell"> Yüklü satımda alarm</label>
+        <label class="chk"><input type="checkbox" id="wh-awall"> Büyük alış emri ve dolmasında alarm</label>
+        <label class="chk"><input type="checkbox" id="wh-asks"> Satış duvarlarını da göster</label>
+      </div>
+      <div class="whgrid">
+        <div class="whcol"><div class="lqh"><span>Yüklü işlemler (canlı)</span><div class="seg sm" id="wh-filt"><button data-v="all">Hepsi</button><button data-v="buy">Alım</button><button data-v="sell">Satım</button></div></div><div id="wh-feed"></div></div>
+        <div class="whcol"><div class="lqh"><span>Balina akışı: alım · satım · net</span><div class="seg sm" id="wh-win"><button data-v="900000">15 dk</button><button data-v="3600000">1 sa</button><button data-v="14400000">4 sa</button></div></div><div id="wh-flow"></div></div>
+        <div class="whcol"><div class="lqh"><span>Emir defterindeki büyük emirler</span></div><div id="wh-walls"></div></div>
+      </div>
+      <div class="lqh"><span>Bulutun gördükleri (bilgisayar kapalıyken de, spot)</span></div>
+      <div id="wh-cloud"></div>
     </section>
 
     <section class="panel macro" aria-labelledby="h-bt" id="btsec">
@@ -1612,7 +1661,7 @@ function renderLog(newCount){
     const a=document.createElement("a"); a.className="li k-"+e.kind+(i<(newCount||0)?" new":""); a.target="_blank"; a.rel="noopener";
     const tm=document.createElement("time"); tm.textContent=timeStr(e.t);
     const lc=document.createElement("span"); lc.className="lc";
-    if(e.name){ a.href=e.url; lc.innerHTML=`<b></b><span class="tag">${e.key==="grp"?"TOPLU":String(e.key).startsWith("sig:")?"SİNYAL":String(e.key).startsWith("scan:")?"v7 TARAMA":"PİYASA"}</span>`; lc.querySelector("b").textContent=e.name; }
+    if(e.name){ a.href=e.url; lc.innerHTML=`<b></b><span class="tag">${e.key==="grp"?"TOPLU":String(e.key).startsWith("sig:")?"SİNYAL":String(e.key).startsWith("scan:")?"v7 TARAMA":String(e.key).startsWith("whale:")?"BALİNA":"PİYASA"}</span>`; lc.querySelector("b").textContent=e.name; }
     else { const c=coins.get(e.key) || {sym:e.sym,m:e.m,base:split(e.sym)[0],quote:split(e.sym)[1]}; a.href=tvUrl(c);
       lc.innerHTML=`<b></b><span class="q">/${c.quote}</span><span class="tag${c.m==="f"?" v":""}">${c.m==="f"?"VADELİ":"SPOT"}</span>`; lc.querySelector("b").textContent=c.base; }
     if(!e.name && coins.has(e.key)) a.addEventListener("click",ev=>{ if(ev.ctrlKey||ev.metaKey||ev.shiftKey) return; ev.preventDefault(); openDetail(e.key); });
@@ -2606,6 +2655,7 @@ function sgDetail(s,c,price,A){
     rows.push(["Sıkışma (BB genişliği sırası)", c.rank==null?"–":`%${c.rank}${c.sq?' <span class="txt up">sıkışık</span>':""}`]);
     rows.push(["Hacim (son mum / 20 ort.)", c.vrel==null?"–":`${nf1.format(c.vrel)}x`]);
     rows.push(["20 mum zirve · 10 mum dip", `${fmtP(c.donHi)} · ${fmtP(c.donLo)}`]);
+    if(typeof whFlow!=="undefined"){ const wk=whFlow["f:"+s.sym]?"f:"+s.sym:"s:"+s.sym; if(whFlow[wk]){ const f=whNet(wk,3600000); if(f.cnt) rows.push(["Balina akışı (1 sa)", `<span class="${f.n>=0?"txt up":"txt down"}">${f.n>=0?"+":"−"}${whUsd(Math.abs(f.n))}</span> <small>alım ${whUsd(f.b)} · satım ${whUsd(f.a)}</small>`]); } }
     const cc=coins.get(s.m+":"+s.sym); if(cc && cc.rad) rows.push(["Pump radarı (panodaki)", `${cc.rad.sc}${cc.rad.stage?" · "+STAGE[cc.rad.stage]:""}`]);
   }
   return `<div class="sgact"><b>${A.t}</b><span>${A.d}</span></div>
@@ -3120,6 +3170,8 @@ function todayItems(){
   const sc24=scFeed.filter(x=>now-x.t<24*3600000 && SC_BUY.has(x.code)), cl24=cloud&&cloud.feed? cloud.feed.filter(x=>now-x.t<24*3600000 && [1,2,3,4,9,10,11,12].includes(x.code)) : [];
   if(sc24.length) it.push({c:"info", t:`Pano taraması son 24 saatte ${sc24.length} AL sinyali buldu: ${[...new Set(sc24.map(x=>split(x.sym)[0]))].slice(0,8).join(", ")}.`, go:"sigsec"});
   if(cl24.length) it.push({c:"info", t:`Bulut son 24 saatte ${cl24.length} AL sinyali verdi: ${[...new Set(cl24.map(x=>split(x.sym)[0]))].slice(0,8).join(", ")}.`, go:"cloudsec"});
+  if(typeof whSet!=="undefined"){ const wl=[...whSet.values()].map(k=>({k,...whNet(k,3600000)})).filter(x=>x.n>=whThr(x.k)*3).sort((a,b)=>b.n-a.n).slice(0,4);
+    if(wl.length) it.push({c:"info", t:`Balinalar son 1 saatte net alıyor: ${wl.map(x=>split(x.k.slice(2))[0]+" +"+whUsd(x.n)).join(", ")}.`, go:"whalesec"}); }
   if(cloud && cloud.tg===false) it.push({c:"warn", t:"Bulut alarmı Telegram'a mesaj gönderemiyor: anahtar eklenmemiş.", go:"cloudsec"});
   return it;
 }
@@ -3132,7 +3184,7 @@ function renderToday(){
 $("today").addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(!b) return; if(b.dataset.id){ sgOpen.add(b.dataset.id); renderSignals(); } goSec(b.dataset.go); });
 
 /* ================= HIZLI GEÇİŞ, BÖLÜM GİZLEME, TEMA ================= */
-const SECS=[["today","Bugün"],["sigsec","Sinyallerim"],["cloudsec","Bulut"],["btsec","Test"],["radar","Pump radarı"],["sec-rise","Yükselenler"],["sec-vol","Hacim"],["sec-fut","Vadeli"],["sec-rs","BTC'ye güç"],["possec","Pozisyonlar"],["macro","Ana piyasalar"],["liqsec","Likidasyon"],["newlist","Listelemeler"],["karnesec","Karne"],["regime","Piyasa havası"]];
+const SECS=[["today","Bugün"],["sigsec","Sinyallerim"],["cloudsec","Bulut"],["whalesec","Balina"],["btsec","Test"],["radar","Pump radarı"],["sec-rise","Yükselenler"],["sec-vol","Hacim"],["sec-fut","Vadeli"],["sec-rs","BTC'ye güç"],["possec","Pozisyonlar"],["macro","Ana piyasalar"],["liqsec","Likidasyon"],["newlist","Listelemeler"],["karnesec","Karne"],["regime","Piyasa havası"]];
 let hid=new Set(lsGet("yp-hide",[]));
 function goSec(id){ const el=$(id); if(!el) return; if(el.hidden){ hid.delete(id); applyHide(); } el.scrollIntoView({behavior:reduceMotion?"auto":"smooth", block:"start"}); }
 function applyHide(){ for(const [id] of SECS){ const el=$(id); if(el) el.hidden=hid.has(id); } lsSet("yp-hide",[...hid]); renderNav(); }
@@ -3157,6 +3209,139 @@ function startUx(){
   setInterval(renderToday, 10000); setTimeout(renderToday, 5000);
 }
 
+/* ================= BALİNA TAKİBİ (canlı) ================= */
+const wh=Object.assign({n:30, sens:1, aBuy:true, aSell:false, aWall:true, walls:true, asks:false, flow:3600000, filt:"all"}, lsGet("yp-whale",{}));
+const whFeed=[], whFlow={}, whCl={}, whLast={}, whLow={}, whWalls={}, whWallEv=[], whCool={};
+let whSet=new Map(), whSock={f:null,s:null}, whMsgs=0, whKey="", whLastMsg=0, whWallAl=0;
+const whSave=()=>lsSet("yp-whale",(({n,sens,aBuy,aSell,aWall,walls,asks,flow,filt})=>({n,sens,aBuy,aSell,aWall,walls,asks,flow,filt}))(wh));
+const whUsd=v=> v>=1e6 ? "$"+nf2.format(v/1e6)+" Mn" : v>=1e3 ? "$"+Math.round(v/1e3)+" B" : "$"+Math.round(v);
+const whDv=c=>(c && c.med5 ? c.med5*288 : 0);
+const whThr=k=>{ const c=coins.get(k); return Math.max(100000, whDv(c)*0.0004)*wh.sens; };
+const whWallMin=k=>{ const c=coins.get(k); return Math.max(250000, whDv(c)*0.001)*wh.sens; };
+function whPick(){
+  const want=new Map(), add=c=>{ if(!c || !/(USDT|USDC|FDUSD)$/.test(c.sym)) return; const f=coins.get("f:"+c.sym), use=f||c; if(!want.has(use.sym)) want.set(use.sym,use.key); };
+  for(const s of signals) if(s.status!=="closed") add(coins.get(s.m+":"+s.sym)||coins.get("f:"+s.sym)||coins.get("s:"+s.sym));
+  for(const c of coins.values()) if(isFav(c.base)) add(c);
+  const prio=want.size;
+  [...coins.values()].filter(c=>c.m==="f" && c.med5).sort((a,b)=>b.med5-a.med5).slice(0,wh.n*2).forEach(c=>{ if(want.size<prio+wh.n) add(c); });
+  return {map:want, prio};
+}
+function whConnect(){
+  const {map}=whPick(); whSet=map;
+  const keys=[...map.values()].sort(), key=keys.join(",");
+  if(key===whKey && whSock.f && whSock.s) return; whKey=key;
+  for(const m of ["f","s"]){
+    try{ whSock[m] && whSock[m].close(); }catch(e){}
+    const list=keys.filter(k=>k[0]===m).map(k=>k.slice(2).toLowerCase()+"@aggTrade");
+    if(!list.length){ whSock[m]=null; continue; }
+    const url=(m==="f"?"wss://fstream.binance.com/stream?streams=":"wss://stream.binance.com:9443/stream?streams=")+list.slice(0,190).join("/");
+    const ws=new WebSocket(url); whSock[m]=ws;
+    ws.onmessage=ev=>{ whMsgs++; whLastMsg=Date.now(); try{ const j=JSON.parse(ev.data), d=j.data; if(d && d.e==="aggTrade") whTrade(m,d); }catch(e){} };
+    ws.onclose=()=>{ if(whSock[m]===ws){ whSock[m]=null; setTimeout(()=>{ whKey=""; whConnect(); },5000); } };
+  }
+}
+function whTrade(m,d){
+  const k=m+":"+d.s, p=+d.p, q=+d.q, T=d.T, side=d.m?"sell":"buy", usd=p*q;
+  whLast[k]=p; whLow[k]= whLow[k]==null ? p : Math.min(whLow[k],p);
+  const c=whCl[k];
+  if(c && c.side===side && T-c.tl<=1000 && T-c.t0<=5000){ c.usd+=usd; c.qty+=q; c.num+=p*q; c.tl=T; return; }
+  if(c) whFlush(k);
+  whCl[k]={side, usd, qty:q, num:p*q, t0:T, tl:T};
+}
+function whNet(k,ms){ const now=Date.now(); let b=0,a=0,n=0; for(const x of whFlow[k]||[]) if(now-x.t<ms){ n++; if(x.side==="buy") b+=x.usd; else a+=x.usd; } return {b,a,n:b-a,cnt:n}; }
+function whFlush(k){
+  const c=whCl[k]; if(!c) return; whCl[k]=null;
+  const T=whThr(k); if(c.usd<T) return;
+  const ev={t:c.t0, k, side:c.side, usd:c.usd, px:c.num/c.qty, x:c.usd/T};
+  (whFlow[k]=whFlow[k]||[]).push({t:c.t0, side:c.side, usd:c.usd}); if(whFlow[k].length>400) whFlow[k].splice(0,100);
+  whFeed.unshift(ev); if(whFeed.length>300) whFeed.length=300;
+  whDirty=true;
+  const on = c.side==="buy" ? wh.aBuy : wh.aSell; if(!on) return;
+  const ck=k+c.side; if(ev.x<3 && Date.now()-(whCool[ck]||0)<10*60000) return; whCool[ck]=Date.now();
+  const co=coins.get(k), [b,q]=split(k.slice(2)), f=whNet(k,15*60000);
+  const msg=`${c.side==="buy"?"Yüklü ALIM":"Yüklü SATIM"}: ${whUsd(c.usd)} piyasa ${c.side==="buy"?"alımı":"satımı"} @ ${fmtP(ev.px)} (eşiğin ${nf1.format(ev.x)} katı). Son 15 dk büyük işlemler net ${f.n>=0?"+":"−"}${whUsd(Math.abs(f.n))}.`;
+  addLog({t:Date.now(), key:"whale:"+k, name:`${b}/${q}${k[0]==="f"?" vadeli":""}`, url:tvUrl({sym:k.slice(2),m:k[0]}), msg, kind:c.side==="buy"?"up":"down"});
+  beep(c.side==="buy"?"up":"down", true); notify(`${b} balina ${c.side==="buy"?"alımı":"satımı"}`, msg); renderLog(1);
+}
+let whDirty=false;
+async function whWallScan(){
+  if(!wh.walls) return;
+  const {map,prio}=whPick(), list=[...map.values()].slice(0, Math.max(10, Math.min(prio,15))); whWallAl=0;
+  for(const k of list){
+    try{
+      const m=k[0], sym=k.slice(2), d=await api(m,`/depth?symbol=${sym}&limit=1000`); if(!d || !d.bids || !d.bids.length) continue;
+      const mid=(+d.bids[0][0] + +d.asks[0][0])/2, W=whWallMin(k), now=Date.now(), map2=whWalls[k]=whWalls[k]||{}, seenNow=new Set();
+      for(const [side,rows] of [["bid",d.bids],["ask",d.asks]]){
+        let g=null; const groups=[];
+        for(const [ps,qs] of rows){ const p=+ps, qy=+qs; if(side==="bid" ? p<mid*0.97 : p>mid*1.03) break;
+          if(g && (side==="bid" ? p>=g.top*0.999 : p<=g.top*1.001)){ g.usd+=p*qy; if(p*qy>g.max){ g.max=p*qy; g.px=p; } } else { g={top:p, px:p, usd:p*qy, max:p*qy}; groups.push(g); } }
+        for(const w of groups){ if(w.usd<W) continue;
+          const key=side+String(Math.round(Math.log(w.px)/Math.log(1.002))); seenNow.add(key);
+          const o=map2[key]||(map2[key]={first:now, n:0, side, sent:false}); o.n++; o.px=w.px; o.usd=w.usd; o.seen=now; o.dist=(w.px/mid-1)*100;
+          if(o.n===2){ whWallEv.unshift({t:now, k, side, px:w.px, usd:w.usd, st:"yeni"}); whDirty=true;
+            if(side==="bid" && wh.aWall && whWallAl<3){ const ck=k+"wall"; if(w.usd>=3*W || now-(whCool[ck]||0)>=30*60000){ whCool[ck]=now; o.sent=true; whWallAl++;
+              const [b,q]=split(sym), msg=`Büyük ALIM emri: ${fmtP(w.px)} seviyesinde ${whUsd(w.usd)} alış duvarı (fiyatın %${nf2.format(Math.abs(o.dist))} altında). Fiyat buraya inerse güçlü alıcı var; emir çekilebilir, tek başına AL sinyali değildir.`;
+              addLog({t:now, key:"whale:"+k, name:`${b}/${q}${m==="f"?" vadeli":""}`, url:tvUrl({sym,m}), msg, kind:"up"}); beep("up",true); notify(`${b} büyük alım emri`, msg); renderLog(1); } } }
+        }
+      }
+      for(const key of Object.keys(map2)){
+        if(seenNow.has(key)) continue; const o=map2[key]; delete map2[key]; if(o.n<2) continue;
+        const filled = o.side==="bid" ? (whLow[k]!=null && whLow[k]<=o.px*1.0008) : false;
+        whWallEv.unshift({t:now, k, side:o.side, px:o.px, usd:o.usd, st: filled?"doldu":"çekildi", age:now-o.first}); whDirty=true;
+        if(filled && o.side==="bid" && wh.aWall){ const [b,q]=split(sym), msg=`Alım emri GERÇEKLEŞTİ: ${fmtP(o.px)} seviyesindeki ${whUsd(o.usd)} alış duvarına satış geldi ve emir doldu. Fiyat şu an ${fmtP(whLast[k]||o.px)}.`;
+          addLog({t:now, key:"whale:"+k, name:`${b}/${q}${m==="f"?" vadeli":""}`, url:tvUrl({sym,m}), msg, kind:"up"}); beep("up",true); notify(`${b} alım emri doldu`, msg); renderLog(1); }
+      }
+      if(whWallEv.length>200) whWallEv.length=200;
+      whLow[k]=whLast[k]??null;
+    }catch(e){}
+  }
+  renderWhale();
+}
+const whAgo=t=>{ const s=Math.round((Date.now()-t)/1000); return s<60?s+" sn":s<3600?Math.round(s/60)+" dk":Math.round(s/3600)+" sa"; };
+function whName(k){ const [b,q]=split(k.slice(2)); return `<button class="whc" type="button" data-key="${k}"><b>${b}</b><span class="q">/${q}</span>${k[0]==="f"?'<span class="tag v">V</span>':""}</button>`; }
+function renderWhale(){
+  const fb=$("wh-feed"); if(!fb) return; whDirty=false;
+  const open=Date.now()-whLastMsg<60000;
+  $("wh-st").textContent = open ? `${whSet.size} coin canlı izleniyor` : "bağlanıyor…";
+  document.querySelectorAll("#wh-filt button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.v===wh.filt));
+  document.querySelectorAll("#wh-win button").forEach(b=>b.setAttribute("aria-pressed", +b.dataset.v===wh.flow));
+  const F=whFeed.filter(x=>wh.filt==="all"||x.side===wh.filt).slice(0,80);
+  fb.innerHTML = F.length ? F.map(x=>`<div class="whr ${x.side}"><span class="sct">${timeStr(x.t)}</span>${whName(x.k)}<span class="whs">${x.side==="buy"?"ALIM":"SATIM"}</span><span class="r"><b>${whUsd(x.usd)}</b><small>${fmtP(x.px)} · ${nf1.format(x.x)}x</small></span></div>`).join("")
+    : '<p class="mnote">Henüz eşiği geçen yüklü işlem yok. Eşik her coin için ayrı: günlük hacminin %0,04\'ü, en az $100 bin.</p>';
+  const rows=[...whSet.values()].map(k=>({k, ...whNet(k, wh.flow)})).filter(x=>x.cnt).sort((a,b)=>b.n-a.n);
+  const mx=Math.max(1,...rows.map(x=>Math.abs(x.n)));
+  $("wh-flow").innerHTML = rows.length ? rows.slice(0,25).map(x=>`<div class="whf">${whName(x.k)}<span class="r up">${x.b?whUsd(x.b):"–"}</span><span class="r down">${x.a?whUsd(x.a):"–"}</span><span class="whbar"><i class="${x.n>=0?"up":"down"}" style="width:${Math.round(Math.abs(x.n)/mx*100)}%"></i></span><span class="r ${x.n>=0?"up":"down"}">${x.n>=0?"+":"−"}${whUsd(Math.abs(x.n))}</span></div>`).join("")
+    : '<p class="mnote">Bu sürede yüklü işlem yok.</p>';
+  const cur=[]; for(const [k,m] of Object.entries(whWalls)) for(const o of Object.values(m)) if(o.n>=2 && (o.side==="bid"||wh.asks)) cur.push({k,...o});
+  cur.sort((a,b)=>b.usd-a.usd);
+  const evs=whWallEv.filter(e=>e.st!=="yeni" && (e.side==="bid"||wh.asks)).slice(0,15);
+  $("wh-walls").innerHTML = (cur.length ? `<div class="whw hd"><span>Coin</span><span>Emir</span><span class="r">Fiyat</span><span class="r">Büyüklük</span><span class="r">Uzaklık</span><span class="r">Süre</span></div>`+cur.slice(0,25).map(o=>`<div class="whw ${o.side}">${whName(o.k)}<span class="whs">${o.side==="bid"?"ALIŞ":"SATIŞ"}</span><span class="r">${fmtP(o.px)}</span><span class="r"><b>${whUsd(o.usd)}</b></span><span class="r">${o.dist>=0?"+":"−"}%${nf2.format(Math.abs(o.dist))}</span><span class="r">${whAgo(o.first)}</span></div>`).join("")
+      : '<p class="mnote">Şu an fiyatın %3 yakınında eşiği geçen büyük emir yok.</p>')
+    + (evs.length ? `<div class="lqh"><span>Son değişiklikler</span></div>`+evs.map(e=>`<div class="whw ev ${e.st==="doldu"?"ok":"pl"}">${whName(e.k)}<span class="whs">${e.st==="doldu"?"DOLDU":"ÇEKİLDİ"}</span><span class="r">${fmtP(e.px)}</span><span class="r">${whUsd(e.usd)}</span><span class="r" style="grid-column:span 2">${whAgo(e.t)} önce</span></div>`).join("") : "");
+  const cb=cloud && cloud.balina ? cloud.balina.slice(0,20) : [];
+  $("wh-cloud").innerHTML = cb.length ? cb.map(x=>{ const k="s:"+x.sym, lbl={alim:"YÜKLÜ ALIM",satim:"YÜKLÜ SATIM",duvar:"ALIŞ DUVARI",doldu:"EMİR DOLDU"}[x.kind]||x.kind;
+      return `<div class="whr ${x.kind==="satim"?"sell":"buy"}"><span class="sct">${new Date(x.t).toLocaleString("tr-TR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}</span>${whName(k)}<span class="whs">${lbl}</span><span class="r"><b>${whUsd(x.usd)}</b><small>${fmtP(x.px)}</small></span></div>`; }).join("")
+    : `<p class="mnote">${cloud && cloud.surekli ? "Bulut henüz yüklü işlem bildirmedi." : "Bulut balina takibi yeni sürümle başlayınca burada görünür."}</p>`;
+}
+function whUI(){ $("wh-n").value=String(wh.n); $("wh-sens").value=String(wh.sens); $("wh-abuy").checked=wh.aBuy; $("wh-asell").checked=wh.aSell; $("wh-awall").checked=wh.aWall; $("wh-asks").checked=wh.asks; }
+$("whalesec").addEventListener("change",e=>{ const id=e.target.id;
+  if(id==="wh-n"){ wh.n=+e.target.value; whKey=""; whConnect(); } else if(id==="wh-sens") wh.sens=+e.target.value;
+  else if(id==="wh-abuy") wh.aBuy=e.target.checked; else if(id==="wh-asell") wh.aSell=e.target.checked; else if(id==="wh-awall") wh.aWall=e.target.checked; else if(id==="wh-asks") wh.asks=e.target.checked;
+  whSave(); renderWhale(); });
+$("whalesec").addEventListener("click",e=>{
+  const f=e.target.closest("#wh-filt button"); if(f){ wh.filt=f.dataset.v; whSave(); renderWhale(); return; }
+  const w=e.target.closest("#wh-win button"); if(w){ wh.flow=+w.dataset.v; whSave(); renderWhale(); return; }
+  const c=e.target.closest(".whc"); if(c){ if(coins.has(c.dataset.key)) openDetail(c.dataset.key); else window.open(tvUrl({sym:c.dataset.key.slice(2),m:c.dataset.key[0]}),"_blank","noopener"); }
+});
+function whFlushTimer(){ const now=Date.now(); for(const k in whCl) if(whCl[k] && now-whCl[k].tl>1500) whFlush(k); if(whDirty) renderWhale(); }
+function startWhale(){
+  whUI(); renderWhale();
+  setTimeout(whConnect, 4000); setInterval(()=>whConnect(), 5*60000);
+  setInterval(whFlushTimer, 1000);
+  setTimeout(()=>{ whWallScan(); setInterval(whWallScan, 60000); }, 15000);
+  setInterval(renderWhale, 15000);
+}
+
 /* ---------- başlat ---------- */
 new ResizeObserver(()=>document.documentElement.style.setProperty("--hdr",$("hdr").offsetHeight+"px")).observe($("hdr"));
 renderRules(); renderLog(); sndUI(); ntfUI(); badge();
@@ -3176,7 +3361,7 @@ setInterval(posTick, 3000);
 setInterval(karneTick, 60000); setTimeout(karneTick, 20000);
 setTimeout(()=>{ listingsLoop(); setInterval(listingsLoop, 30*60000); }, 15000);
 setInterval(dlgRefresh, 2000); setInterval(loadDlgBook, 3000);
-setTimeout(startSignals, 1200); setTimeout(startV7, 1500); setTimeout(startUx, 1700);
+setTimeout(startSignals, 1200); setTimeout(startV7, 1500); setTimeout(startUx, 1700); setTimeout(startWhale, 2500);
 async function wake(){ try{ if("wakeLock" in navigator && document.visibilityState==="visible") await navigator.wakeLock.request("screen"); }catch(e){} }
 wake(); document.addEventListener("visibilitychange",wake);
 </script>
