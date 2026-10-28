@@ -194,7 +194,7 @@ async function main() {
   try { await tick(); } catch (e) { console.log("tur hatası", e.message); }
   save(); publish();
   if (!LOOP) { await drain(); return; }
-  let nextWall = Date.now() + 20000, nextPub = Date.now() + 10 * 60000, lastTry = 0;
+  let nextWall = Date.now() + 20000, nextPub = Date.now() + 90000, lastTry = 0;
   while (Date.now() < DEADLINE) {
     if (whale && Date.now() >= nextWall) { await whale.wallScan(); nextWall = Date.now() + (W.duvar_sn || 60) * 1000; }
     if (tickDue() && Date.now() - lastTry > 60000) {
@@ -202,7 +202,7 @@ async function main() {
       try { await tick(); } catch (e) { console.log("tur hatası", e.message); }
       save(); publish();
     }
-    if (Date.now() >= nextPub) { save(); publish(); nextPub = Date.now() + 10 * 60000; }
+    if (Date.now() >= nextPub) { save(); publish(); nextPub = Date.now() + 10 * 60000; if (whale) { const st = whale.stats(); console.log(`${timeTR(Date.now())} TR · balina: ${st.msgs} canlı işlem mesajı, ${st.events} olay`); } }
     await sleep(3000);
   }
   if (whale) whale.stop();
