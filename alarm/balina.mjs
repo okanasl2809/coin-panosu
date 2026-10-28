@@ -4,7 +4,7 @@ const fmtUsd = v => v >= 1e6 ? "$" + (v / 1e6).toFixed(2).replace(".", ",") + " 
 
 export function createWhale({ cfg, syms, vol24, api, notify, fmt, tv, WS = globalThis.WebSocket, log = console.log }) {
   const C = Object.assign({ min_usd: 100000, oran: 0.0004, satislari_da_bildir: false, bekleme_dk: 15,
-    duvar: true, duvar_coin: 15, duvar_min_usd: 250000, duvar_oran: 0.001, duvar_uzaklik: 3, duvar_bekleme_dk: 30 }, cfg || {});
+    duvar: true, duvar_coin: 15, duvar_min_usd: 400000, duvar_oran: 0.002, duvar_kat: 5, duvar_uzaklik: 3, duvar_bekleme_dk: 60, duvar_tur_mesaj: 2 }, cfg || {});
   const thr = s => Math.max(C.min_usd, (vol24[s] || 0) * C.oran);
   const wallMin = s => Math.max(C.duvar_min_usd, (vol24[s] || 0) * C.duvar_oran);
   const cl = {}, flow = {}, last = {}, low = {}, cool = {}, walls = {}, events = [];
@@ -45,15 +45,17 @@ export function createWhale({ cfg, syms, vol24, api, notify, fmt, tv, WS = globa
   // emir defteri: alış duvarları
   async function wallScan() {
     if (!C.duvar) return;
+    let sentThis = 0;
     for (const s of syms.slice(0, C.duvar_coin)) {
       try {
         const d = await api(`/depth?symbol=${s}&limit=1000`); if (!d || !d.bids || !d.bids.length) continue;
         const bid = +d.bids[0][0], ask = +d.asks[0][0], mid = (bid + ask) / 2, W = wallMin(s), lim = mid * (1 - C.duvar_uzaklik / 100);
         const groups = []; let g = null;
         for (const [ps, qs] of d.bids) { const p = +ps, q = +qs; if (p < lim) break; if (g && p >= g.top * 0.999) { g.usd += p * q; g.low = p; if (p * q > g.maxUsd) { g.maxUsd = p * q; g.px = p; } } else { g = { top: p, low: p, px: p, usd: p * q, maxUsd: p * q }; groups.push(g); } }
+        const med = groups.map(x => x.usd).sort((a, b) => a - b)[Math.floor(groups.length / 2)] || 0, minUsd = Math.max(W, med * C.duvar_kat);
         const now = Date.now(), map = walls[s] = walls[s] || {}, seenNow = new Set();
         for (const w of groups) {
-          if (w.usd < W) continue;
+          if (w.usd < minUsd) continue;
           const key = String(Math.round(Math.log(w.px) / Math.log(1.002)));
           seenNow.add(key);
           const o = map[key] || (map[key] = { first: now, n: 0, px: w.px, usd: w.usd, sent: false });
@@ -61,8 +63,8 @@ export function createWhale({ cfg, syms, vol24, api, notify, fmt, tv, WS = globa
           if (o.n >= 2 && !o.sent) {
             o.sent = true;
             const ck = s + "wall", big = w.usd >= 3 * W;
-            if (big || now - (cool[ck] || 0) >= C.duvar_bekleme_dk * 60000) {
-              cool[ck] = now;
+            if (sentThis < C.duvar_tur_mesaj && (big || now - (cool[ck] || 0) >= C.duvar_bekleme_dk * 60000)) {
+              cool[ck] = now; sentThis++;
               notify(`🧱 BÜYÜK ALIM EMRİ: ${s} ${fmt(w.px)} seviyesinde ${fmtUsd(w.usd)} alış duvarı (fiyatın %${((1 - w.px / mid) * 100).toFixed(2).replace(".", ",")} altında)\nFiyat buraya inerse güçlü alıcı var demektir. Emir çekilebilir, tek başına AL sinyali değildir.\n${tv(s)}`,
                 { t: now, sym: s, kind: "duvar", usd: Math.round(w.usd), px: w.px });
             }
@@ -75,7 +77,7 @@ export function createWhale({ cfg, syms, vol24, api, notify, fmt, tv, WS = globa
           if (!o.sent) continue;
           const filled = low[s] != null && low[s] <= o.px * 1.0008;
           events.unshift({ type: filled ? "filled" : "pulled", t: now, sym: s, px: o.px, usd: o.usd });
-          if (filled) notify(`✅ ALIM EMRİ GERÇEKLEŞTİ: ${s} ${fmt(o.px)} seviyesindeki ${fmtUsd(o.usd)} alış duvarına satış geldi ve emir doldu. Fiyat şu an ${fmt(last[s] || o.px)}.\n${tv(s)}`, { t: now, sym: s, kind: "doldu", usd: Math.round(o.usd), px: o.px });
+          if (filled && sentThis++ < C.duvar_tur_mesaj + 1) notify(`✅ ALIM EMRİ GERÇEKLEŞTİ: ${s} ${fmt(o.px)} seviyesindeki ${fmtUsd(o.usd)} alış duvarına satış geldi ve emir doldu. Fiyat şu an ${fmt(last[s] || o.px)}.\n${tv(s)}`, { t: now, sym: s, kind: "doldu", usd: Math.round(o.usd), px: o.px });
         }
         low[s] = last[s] ?? null;
       } catch (e) { log("duvar hatası", s, e.message); }

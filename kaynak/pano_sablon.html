@@ -3217,7 +3217,7 @@ const whSave=()=>lsSet("yp-whale",(({n,sens,aBuy,aSell,aWall,walls,asks,flow,fil
 const whUsd=v=> v>=1e6 ? "$"+nf2.format(v/1e6)+" Mn" : v>=1e3 ? "$"+Math.round(v/1e3)+" B" : "$"+Math.round(v);
 const whDv=c=>(c && c.med5 ? c.med5*288 : 0);
 const whThr=k=>{ const c=coins.get(k); return Math.max(100000, whDv(c)*0.0004)*wh.sens; };
-const whWallMin=k=>{ const c=coins.get(k); return Math.max(250000, whDv(c)*0.001)*wh.sens; };
+const whWallMin=k=>{ const c=coins.get(k); return Math.max(400000, whDv(c)*0.002)*wh.sens; };
 function whPick(){
   const want=new Map(), add=c=>{ if(!c || !/(USDT|USDC|FDUSD)$/.test(c.sym)) return; const f=coins.get("f:"+c.sym), use=f||c; if(!want.has(use.sym)) want.set(use.sym,use.key); };
   for(const s of signals) if(s.status!=="closed") add(coins.get(s.m+":"+s.sym)||coins.get("f:"+s.sym)||coins.get("s:"+s.sym));
@@ -3275,7 +3275,8 @@ async function whWallScan(){
         let g=null; const groups=[];
         for(const [ps,qs] of rows){ const p=+ps, qy=+qs; if(side==="bid" ? p<mid*0.97 : p>mid*1.03) break;
           if(g && (side==="bid" ? p>=g.top*0.999 : p<=g.top*1.001)){ g.usd+=p*qy; if(p*qy>g.max){ g.max=p*qy; g.px=p; } } else { g={top:p, px:p, usd:p*qy, max:p*qy}; groups.push(g); } }
-        for(const w of groups){ if(w.usd<W) continue;
+        const med=groups.map(x=>x.usd).sort((a,b)=>a-b)[Math.floor(groups.length/2)]||0, minU=Math.max(W, med*5);
+        for(const w of groups){ if(w.usd<minU) continue;
           const key=side+String(Math.round(Math.log(w.px)/Math.log(1.002))); seenNow.add(key);
           const o=map2[key]||(map2[key]={first:now, n:0, side, sent:false}); o.n++; o.px=w.px; o.usd=w.usd; o.seen=now; o.dist=(w.px/mid-1)*100;
           if(o.n===2){ whWallEv.unshift({t:now, k, side, px:w.px, usd:w.usd, st:"yeni"}); whDirty=true;

@@ -22,9 +22,11 @@
     "duvar": true,
     "duvar_coin": 15,
     "duvar_sn": 60,
-    "duvar_min_usd": 250000,
-    "duvar_oran": 0.001,
+    "duvar_min_usd": 400000,
+    "duvar_oran": 0.002,
     "duvar_uzaklik": 3,
-    "duvar_bekleme_dk": 30
+    "duvar_bekleme_dk": 60,
+    "duvar_kat": 5,
+    "duvar_tur_mesaj": 2
   }
 }
